@@ -17,15 +17,20 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.waveform.objects;
 
-public class WaveformObjectForFoo extends WaveformObjectAbstract {
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-    @Override
-    protected void execute(ExecutionContext executionContext) {
+import dom.waveform.WaveformObject;
+import dom.waveform.WaveformObjects;
 
-        create("Foo", new int[] {7, 8, 9}, executionContext);
+public abstract class WaveformObjectAbstract extends FixtureScript {
+
+    protected WaveformObject create(final String name, int[] wave, ExecutionContext executionContext) {
+        return executionContext.addResult(this, waveformObjects.create(name, wave));
     }
 
+    @javax.inject.Inject
+    private WaveformObjects waveformObjects;
 
 }

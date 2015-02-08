@@ -17,12 +17,12 @@
  *  under the License.
  */
 
-package fixture.simple.scenario;
+package fixture.waveform.scenario;
 
-import fixture.simple.WaveformObjectsTearDownFixture;
-import fixture.simple.objects.WaveformObjectForBar;
-import fixture.simple.objects.WaveformObjectForBaz;
-import fixture.simple.objects.WaveformObjectForFoo;
+import fixture.waveform.WaveformObjectsTearDownFixture;
+import fixture.waveform.objects.WaveformObjectForBar;
+import fixture.waveform.objects.WaveformObjectForBaz;
+import fixture.waveform.objects.WaveformObjectForFoo;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 

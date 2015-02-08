@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package fixture.simple;
+package fixture.waveform;
 
-import fixture.simple.scenario.WaveformObjectsFixture;
+import fixture.waveform.scenario.WaveformObjectsFixture;
 
 import java.util.List;
 import org.apache.isis.applib.annotation.Action;

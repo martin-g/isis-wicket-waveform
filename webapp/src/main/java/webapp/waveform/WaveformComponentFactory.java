@@ -6,6 +6,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 import dom.waveform.Waveform;
+import dom.waveform.WaveformObject;
 
 /**
  *
@@ -13,7 +14,7 @@ import dom.waveform.Waveform;
 public class WaveformComponentFactory extends ComponentFactoryScalarAbstract {
 
     public WaveformComponentFactory() {
-        super(WaveformPanel.class, Waveform.class);
+        super(WaveformPanel.class, WaveformObject.class);
     }
 
     @Override

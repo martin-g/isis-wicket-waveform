@@ -20,8 +20,8 @@ package integration.tests.smoke;
 
 import dom.waveform.WaveformObject;
 import dom.waveform.WaveformObjects;
-import fixture.simple.scenario.WaveformObjectsFixture;
-import fixture.simple.WaveformObjectsTearDownFixture;
+import fixture.waveform.WaveformObjectsTearDownFixture;
+import fixture.waveform.scenario.WaveformObjectsFixture;
 import integration.tests.WaveformAppIntegTest;
 
 import javax.inject.Inject;

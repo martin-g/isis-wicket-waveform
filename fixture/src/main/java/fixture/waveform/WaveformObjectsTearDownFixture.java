@@ -17,20 +17,20 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.waveform;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-import dom.waveform.WaveformObject;
-import dom.waveform.WaveformObjects;
+public class WaveformObjectsTearDownFixture extends FixtureScript {
 
-public abstract class WaveformObjectAbstract extends FixtureScript {
-
-    protected WaveformObject create(final String name, int[] wave, ExecutionContext executionContext) {
-        return executionContext.addResult(this, waveformObjects.create(name, wave));
+    @Override
+    protected void execute(ExecutionContext executionContext) {
+        isisJdoSupport.executeUpdate("delete from \"WaveformObject\"");
     }
 
+
     @javax.inject.Inject
-    private WaveformObjects waveformObjects;
+    private IsisJdoSupport isisJdoSupport;
 
 }

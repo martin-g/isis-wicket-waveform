@@ -17,14 +17,14 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.waveform.objects;
 
-public class WaveformObjectForBar extends WaveformObjectAbstract {
+public class WaveformObjectForBaz extends WaveformObjectAbstract {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-        create("Bar", new int[] {1, 2, 3}, executionContext);
+        create("Baz", new int[] {4, 5, 6}, executionContext);
     }
 
 

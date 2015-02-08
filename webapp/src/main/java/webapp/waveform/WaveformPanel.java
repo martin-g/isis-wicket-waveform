@@ -25,8 +25,8 @@ public class WaveformPanel extends FormComponentPanel<ObjectAdapter> {
         this.converter = new WaveformConverter();
 
         ObjectAdapter objectAdapter = model.getObject();
-        WaveformObject waveformObject = (WaveformObject) objectAdapter.getObject();
-        String string = converter.convertToString(waveformObject.getWave(), Locale.ENGLISH);
+        Waveform waveform = (Waveform) objectAdapter.getObject();
+        String string = converter.convertToString(waveform, Locale.ENGLISH);
         this.waveformField = new HiddenField<>("waveform", Model.of(string));
     }
 

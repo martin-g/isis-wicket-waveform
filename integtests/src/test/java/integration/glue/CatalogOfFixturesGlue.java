@@ -18,7 +18,7 @@ package integration.glue;
 
 import cucumber.api.java.Before;
 import dom.waveform.WaveformObject;
-import fixture.simple.scenario.WaveformObjectsFixture;
+import fixture.waveform.scenario.WaveformObjectsFixture;
 
 import org.apache.isis.core.specsupport.scenarios.InMemoryDB;
 import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
