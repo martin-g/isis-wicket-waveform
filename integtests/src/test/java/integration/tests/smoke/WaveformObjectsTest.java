@@ -18,11 +18,11 @@
  */
 package integration.tests.smoke;
 
-import dom.simple.SimpleObject;
-import dom.simple.SimpleObjects;
-import fixture.simple.scenario.SimpleObjectsFixture;
-import fixture.simple.SimpleObjectsTearDownFixture;
-import integration.tests.SimpleAppIntegTest;
+import dom.waveform.WaveformObject;
+import dom.waveform.WaveformObjects;
+import fixture.simple.scenario.WaveformObjectsFixture;
+import fixture.simple.WaveformObjectsTearDownFixture;
+import integration.tests.WaveformAppIntegTest;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -40,7 +40,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SimpleObjectsTest extends SimpleAppIntegTest {
+public class WaveformObjectsTest extends WaveformAppIntegTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -48,27 +48,27 @@ public class SimpleObjectsTest extends SimpleAppIntegTest {
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    SimpleObjects simpleObjects;
+    WaveformObjects simpleObjects;
 
     FixtureScript fixtureScript;
 
-    public static class ListAll extends SimpleObjectsTest {
+    public static class ListAll extends WaveformObjectsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsFixture();
+            fixtureScript = new WaveformObjectsFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<WaveformObject> all = wrap(simpleObjects).listAll();
 
             // then
             assertThat(all.size(), is(3));
 
-            SimpleObject simpleObject = wrap(all.get(0));
+            WaveformObject simpleObject = wrap(all.get(0));
             assertThat(simpleObject.getName(), is("Foo"));
         }
 
@@ -76,33 +76,33 @@ public class SimpleObjectsTest extends SimpleAppIntegTest {
         public void whenNone() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new WaveformObjectsTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<WaveformObject> all = wrap(simpleObjects).listAll();
 
             // then
             assertThat(all.size(), is(0));
         }
     }
 
-    public static class Create extends SimpleObjectsTest {
+    public static class Create extends WaveformObjectsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new WaveformObjectsTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(simpleObjects).create("Faz", new int[] {1, 2, 3});
 
             // then
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<WaveformObject> all = wrap(simpleObjects).listAll();
             assertThat(all.size(), is(1));
         }
 
@@ -110,17 +110,17 @@ public class SimpleObjectsTest extends SimpleAppIntegTest {
         public void whenAlreadyExists() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new WaveformObjectsTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
-            wrap(simpleObjects).create("Faz");
+            wrap(simpleObjects).create("Faz", new int[] {1, 2, 3});
             nextTransaction();
 
             // then
             expectedException.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(simpleObjects).create("Faz", new int[] {1, 2, 3});
             nextTransaction();
         }
 

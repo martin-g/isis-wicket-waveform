@@ -26,9 +26,9 @@ import org.apache.isis.objectstore.jdo.datanucleus.IsisConfigurationForJdoIntegT
  * Holds an instance of an {@link IsisSystemForTest} as a {@link ThreadLocal} on the current thread,
  * initialized with ToDo app's domain services. 
  */
-public class SimpleAppSystemInitializer {
+public class WaveformAppSystemInitializer {
     
-    private SimpleAppSystemInitializer(){}
+    private WaveformAppSystemInitializer(){}
 
     public static IsisSystemForTest initIsft() {
         IsisSystemForTest isft = IsisSystemForTest.getElseNull();
@@ -47,8 +47,8 @@ public class SimpleAppSystemInitializer {
             with(new DataNucleusPersistenceMechanismInstaller());
 
             // services annotated with @DomainService
-            withServicesIn( "dom.simple"
-                            ,"fixture.simple"
+            withServicesIn( "dom.waveform"
+                            ,"fixture.waveform"
                             ,"org.apache.isis.core.wrapper"
                             ,"org.apache.isis.applib"
                             ,"org.apache.isis.core.metamodel.services"

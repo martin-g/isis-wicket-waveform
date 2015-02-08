@@ -1,15 +1,11 @@
 package webapp.waveform;
 
-import dom.waveform.Waveform;
-
+import org.apache.isis.viewer.wicket.model.models.ScalarModel;
+import org.apache.isis.viewer.wicket.ui.components.scalars.ComponentFactoryScalarAbstract;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
-import org.apache.isis.core.metamodel.adapter.ObjectAdapter;
-import org.apache.isis.viewer.wicket.model.models.EntityModel;
-import org.apache.isis.viewer.wicket.model.models.ScalarModel;
-import org.apache.isis.viewer.wicket.ui.ComponentFactoryAbstract;
-import org.apache.isis.viewer.wicket.ui.ComponentType;
-import org.apache.isis.viewer.wicket.ui.components.scalars.ComponentFactoryScalarAbstract;
+
+import dom.waveform.Waveform;
 
 /**
  *
@@ -18,6 +14,19 @@ public class WaveformComponentFactory extends ComponentFactoryScalarAbstract {
 
     public WaveformComponentFactory() {
         super(WaveformPanel.class, Waveform.class);
+    }
+
+    @Override
+    public ApplicationAdvice appliesTo(IModel<?> model) {
+        ApplicationAdvice applies = super.appliesTo(model);
+        if (ApplicationAdvice.APPLIES == applies) {
+            ScalarModel scalarModel = (ScalarModel) model;
+            if (scalarModel.getKind() == ScalarModel.Kind.PARAMETER) {
+                return ApplicationAdvice.DOES_NOT_APPLY;
+            }
+        }
+
+        return applies;
     }
 
     @Override

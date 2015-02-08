@@ -18,11 +18,11 @@
  */
 package integration.tests.smoke;
 
-import dom.simple.SimpleObject;
-import dom.simple.SimpleObjects;
-import fixture.simple.scenario.SimpleObjectsFixture;
-import fixture.simple.SimpleObjectsTearDownFixture;
-import integration.tests.SimpleAppIntegTest;
+import dom.waveform.WaveformObject;
+import dom.waveform.WaveformObjects;
+import fixture.simple.scenario.WaveformObjectsFixture;
+import fixture.simple.WaveformObjectsTearDownFixture;
+import integration.tests.WaveformAppIntegTest;
 
 import javax.inject.Inject;
 import org.junit.Test;
@@ -34,30 +34,30 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class SimpleObjectTest extends SimpleAppIntegTest {
+public class WaveformObjectTest extends WaveformAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    SimpleObjects simpleObjects;
+    WaveformObjects simpleObjects;
 
     FixtureScript fixtureScript;
 
-    public static class Name extends SimpleObjectTest {
+    public static class Name extends WaveformObjectTest {
 
         @Test
         public void exists() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsFixture();
+            fixtureScript = new WaveformObjectsFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
 
-            final SimpleObject simpleObjectPojo =
-                    fixtureScript.lookup("simple-objects-fixture/simple-object-for-foo/item-1", SimpleObject.class);
+            final WaveformObject simpleObjectPojo =
+                    fixtureScript.lookup("Waveform-objects-fixture/Waveform-object-for-foo/item-1", WaveformObject.class);
 
             // when
             assertThat(simpleObjectPojo, is(not(nullValue())));
-            final SimpleObject simpleObjectWrapped = wrap(simpleObjectPojo);
+            final WaveformObject simpleObjectWrapped = wrap(simpleObjectPojo);
 
             // then
             assertThat(simpleObjectWrapped.getName(), is("Foo"));
@@ -67,11 +67,11 @@ public class SimpleObjectTest extends SimpleAppIntegTest {
         public void doesNotExist() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new WaveformObjectsTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
 
             // when
-            SimpleObject simpleObjectPojo = fixtureScript.lookup("non-existent", SimpleObject.class);
+            WaveformObject simpleObjectPojo = fixtureScript.lookup("non-existent", WaveformObject.class);
 
             // then
             assertThat(simpleObjectPojo, is(nullValue()));

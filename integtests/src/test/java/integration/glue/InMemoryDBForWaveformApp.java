@@ -14,31 +14,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-{
-  "columns": [
-    {
-      "span": 6,
-      "memberGroups": {
-        "General": {
-          "members": {
-            "name": {}
-          }
-        }
-      }
-    },
-    {
-      "span": 0,
-      "memberGroups": {}
-    },
-    {
-      "span": 0,
-      "memberGroups": {}
-    },
-    {
-      "span": 6,
-      "collections": {}
+package integration.glue;
+
+import dom.waveform.WaveformObject;
+
+import org.apache.isis.core.specsupport.scenarios.InMemoryDB;
+import org.apache.isis.core.specsupport.scenarios.ScenarioExecution;
+
+public class InMemoryDBForWaveformApp extends InMemoryDB {
+    
+    public InMemoryDBForWaveformApp(ScenarioExecution scenarioExecution) {
+        super(scenarioExecution);
     }
-  ],
-  "actions": {}
+    
+    /**
+     * Hook to initialize if possible.
+     */
+    @Override
+    protected void init(Object obj, String str) {
+        if(obj instanceof WaveformObject) {
+            WaveformObject toDoItem = (WaveformObject) obj;
+            toDoItem.setName(str);
+        }
+    }
 }
- 

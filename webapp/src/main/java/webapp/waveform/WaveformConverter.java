@@ -26,6 +26,9 @@ public class WaveformConverter implements IConverter<Waveform> {
 
     @Override
     public String convertToString(Waveform value, Locale locale) {
+        if (value == null) {
+            return "";
+        }
         int[] data = value.getData();
         StringBuilder asString = new StringBuilder(data.length);
         for (int integer : data) {

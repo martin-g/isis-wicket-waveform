@@ -18,7 +18,7 @@
  */
 package fixture.simple;
 
-import fixture.simple.scenario.SimpleObjectsFixture;
+import fixture.simple.scenario.WaveformObjectsFixture;
 
 import java.util.List;
 import org.apache.isis.applib.annotation.Action;
@@ -40,10 +40,10 @@ import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
         menuOrder = "20"
 )
-public class SimpleObjectsFixturesService extends FixtureScripts {
+public class WaveformObjectsFixturesService extends FixtureScripts {
 
-    public SimpleObjectsFixturesService() {
-        super("fixture.simple");
+    public WaveformObjectsFixturesService() {
+        super("fixture.waveform");
     }
 
     @Override
@@ -68,7 +68,7 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
     )
     @MemberOrder(sequence="20")
     public Object installFixturesAndReturnFirst() {
-        final List<FixtureResult> run = findFixtureScriptFor(SimpleObjectsFixture.class).run(null);
+        final List<FixtureResult> run = findFixtureScriptFor(WaveformObjectsFixture.class).run(null);
         return run.get(0).getObject();
     }
 

@@ -19,18 +19,13 @@
 
 package fixture.simple.objects;
 
-import dom.simple.SimpleObject;
-import dom.simple.SimpleObjects;
+public class WaveformObjectForBaz extends WaveformObjectAbstract {
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
+    @Override
+    protected void execute(ExecutionContext executionContext) {
 
-public abstract class SimpleObjectAbstract extends FixtureScript {
-
-    protected SimpleObject create(final String name, ExecutionContext executionContext) {
-        return executionContext.addResult(this, simpleObjects.create(name));
+        create("Baz", new int[] {4, 5, 6}, executionContext);
     }
 
-    @javax.inject.Inject
-    private SimpleObjects simpleObjects;
 
 }

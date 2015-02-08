@@ -2,35 +2,40 @@ package webapp.waveform;
 
 import org.apache.isis.core.metamodel.adapter.ObjectAdapter;
 import org.apache.isis.viewer.wicket.model.models.ScalarModel;
-import org.apache.isis.viewer.wicket.ui.panels.PanelAbstract;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.FormComponentPanel;
+import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.convert.IConverter;
 
 import dom.waveform.Waveform;
+import dom.waveform.WaveformObject;
+
+import java.util.Locale;
 
 /**
  *
  */
-public class WaveformPanel extends PanelAbstract<ScalarModel> {
+public class WaveformPanel extends FormComponentPanel<ObjectAdapter> {
+
+    private final HiddenField<String> waveformField;
+    private final WaveformConverter converter;
 
     public WaveformPanel(String id, ScalarModel model) {
         super(id, model);
+
+        this.converter = new WaveformConverter();
+
+        ObjectAdapter objectAdapter = model.getObject();
+        WaveformObject waveformObject = (WaveformObject) objectAdapter.getObject();
+        String string = converter.convertToString(waveformObject.getWave(), Locale.ENGLISH);
+        this.waveformField = new HiddenField<>("waveform", Model.of(string));
     }
 
     @Override
-    protected void onInitialize() {
-        super.onInitialize();
-
-        ScalarModel model = getModel();
-        ObjectAdapter objectAdapter = model.getObject();
-        Waveform waveform = (Waveform) objectAdapter.getObject();
-        TextField<Waveform> editor = new TextField<Waveform>("editor", Model.of(waveform)) {
-            @Override
-            public <C> IConverter<C> getConverter(Class<C> type) {
-                return (type.isAssignableFrom(Waveform.class)) ? (IConverter<C>) new WaveformConverter() : super.getConverter(type);
-            }
-        };
-        add(editor);
+    public void updateModel() {
+        String input = waveformField.getModelObject();
+        Waveform waveform = converter.convertToObject(input, Locale.ENGLISH);
+        ObjectAdapter objectAdapter = getModelObject();
+        WaveformObject waveformObject = (WaveformObject) objectAdapter.getObject();
+        waveformObject.setWave(waveform);
     }
 }

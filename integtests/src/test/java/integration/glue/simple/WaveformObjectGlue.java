@@ -18,8 +18,8 @@ package integration.glue.simple;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
-import dom.simple.SimpleObject;
-import dom.simple.SimpleObjects;
+import dom.waveform.WaveformObject;
+import dom.waveform.WaveformObjects;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,20 +33,20 @@ import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SimpleObjectGlue extends CukeGlueAbstract {
+public class WaveformObjectGlue extends CukeGlueAbstract {
 
     @Given("^there are.* (\\d+) simple objects$")
     public void there_are_N_simple_objects(int n) throws Throwable {
         if(supportsMocks()) {
             checking(new Expectations() {
                 {
-                    allowing(service(SimpleObjects.class)).listAll();
-                    will(returnValue(allSimpleObjects()));
+                    allowing(service(WaveformObjects.class)).listAll();
+                    will(returnValue(allWaveformObjects()));
                 }
             });
         }
         try {
-            final List<SimpleObject> findAll = service(SimpleObjects.class).listAll();
+            final List<WaveformObject> findAll = service(WaveformObjects.class).listAll();
             assertThat(findAll.size(), is(n));
             putVar("list", "all", findAll);
             
@@ -60,12 +60,12 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
         if(supportsMocks()) {
             checking(new Expectations() {
                 {
-                    oneOf(service(SimpleObjects.class)).create(with(any(String.class)));
+                    oneOf(service(WaveformObjects.class)).create(with(any(String.class)), with((int[])null));
                     will(addToInMemoryDB());
                 }
             });
         }
-        service(SimpleObjects.class).create(UUID.randomUUID().toString());
+        service(WaveformObjects.class).create(UUID.randomUUID().toString(), null);
     }
     
     private Action addToInMemoryDB() {
@@ -75,9 +75,9 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
             public Object invoke(Invocation invocation) throws Throwable {
                 final InMemoryDB inMemoryDB = getVar("isis", "in-memory-db", InMemoryDB.class);
                 final String name = (String)invocation.getParameter(0);
-                final SimpleObject obj = new SimpleObject();
+                final WaveformObject obj = new WaveformObject();
                 obj.setName(name);
-                inMemoryDB.put(SimpleObject.class, name, obj);
+                inMemoryDB.put(WaveformObject.class, name, obj);
                 return obj;
             }
             
@@ -89,8 +89,8 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     }
 
     // helper
-    private List<SimpleObject> allSimpleObjects() {
+    private List<WaveformObject> allWaveformObjects() {
         final InMemoryDB inMemoryDB = getVar("isis", "in-memory-db", InMemoryDB.class);
-        return inMemoryDB.findAll(SimpleObject.class);
+        return inMemoryDB.findAll(WaveformObject.class);
     }
 }

@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package dom.simple;
+package dom.waveform;
 
 import java.util.List;
 import com.google.common.collect.Lists;
@@ -31,34 +31,34 @@ import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SimpleObjectsTest {
+public class WaveformObjectsTest {
 
     @Rule
     public JUnitRuleMockery2 context = JUnitRuleMockery2.createFor(Mode.INTERFACES_AND_CLASSES);
 
     @Mock
     DomainObjectContainer mockContainer;
-    
-    SimpleObjects simpleObjects;
+
+    WaveformObjects waveformObjects;
 
     @Before
     public void setUp() throws Exception {
-        simpleObjects = new SimpleObjects();
-        simpleObjects.container = mockContainer;
+        waveformObjects = new WaveformObjects();
+        waveformObjects.container = mockContainer;
     }
 
-    public static class Create extends SimpleObjectsTest {
+    public static class Create extends WaveformObjectsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            final SimpleObject simpleObject = new SimpleObject();
+            final WaveformObject simpleObject = new WaveformObject();
 
             final Sequence seq = context.sequence("create");
             context.checking(new Expectations() {
                 {
-                    oneOf(mockContainer).newTransientInstance(SimpleObject.class);
+                    oneOf(mockContainer).newTransientInstance(WaveformObject.class);
                     inSequence(seq);
                     will(returnValue(simpleObject));
 
@@ -68,7 +68,7 @@ public class SimpleObjectsTest {
             });
 
             // when
-            final SimpleObject obj = simpleObjects.create("Foobar");
+            final WaveformObject obj = waveformObjects.create("Foobar", new int[] {1, 2, 3});
 
             // then
             assertThat(obj, is(simpleObject));
@@ -77,23 +77,23 @@ public class SimpleObjectsTest {
 
     }
 
-    public static class ListAll extends SimpleObjectsTest {
+    public static class ListAll extends WaveformObjectsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            final List<SimpleObject> all = Lists.newArrayList();
+            final List<WaveformObject> all = Lists.newArrayList();
 
             context.checking(new Expectations() {
                 {
-                    oneOf(mockContainer).allInstances(SimpleObject.class);
+                    oneOf(mockContainer).allInstances(WaveformObject.class);
                     will(returnValue(all));
                 }
             });
 
             // when
-            final List<SimpleObject> list = simpleObjects.listAll();
+            final List<WaveformObject> list = waveformObjects.listAll();
 
             // then
             assertThat(list, is(all));

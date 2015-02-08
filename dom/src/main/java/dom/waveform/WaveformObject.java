@@ -63,7 +63,7 @@ public class WaveformObject implements Comparable<WaveformObject> {
 
     //region > wave (property)
 
-    private Waveform wave;
+    private Waveform wave = new Waveform();
 
     @javax.jdo.annotations.Column(allowsNull="false")
     @Persistent

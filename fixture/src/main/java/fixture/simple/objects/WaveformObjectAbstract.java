@@ -17,29 +17,20 @@
  *  under the License.
  */
 
-package fixture.simple.scenario;
-
-import fixture.simple.SimpleObjectsTearDownFixture;
-import fixture.simple.objects.SimpleObjectForBar;
-import fixture.simple.objects.SimpleObjectForBaz;
-import fixture.simple.objects.SimpleObjectForFoo;
+package fixture.simple.objects;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-public class SimpleObjectsFixture extends FixtureScript {
+import dom.waveform.WaveformObject;
+import dom.waveform.WaveformObjects;
 
-    public SimpleObjectsFixture() {
-        withDiscoverability(Discoverability.DISCOVERABLE);
+public abstract class WaveformObjectAbstract extends FixtureScript {
+
+    protected WaveformObject create(final String name, int[] wave, ExecutionContext executionContext) {
+        return executionContext.addResult(this, waveformObjects.create(name, wave));
     }
 
-    @Override
-    protected void execute(final ExecutionContext executionContext) {
-
-        executionContext.executeChild(this, new SimpleObjectsTearDownFixture());
-
-        executionContext.executeChild(this, new SimpleObjectForFoo());
-        executionContext.executeChild(this, new SimpleObjectForBar());
-        executionContext.executeChild(this, new SimpleObjectForBaz());
-    }
+    @javax.inject.Inject
+    private WaveformObjects waveformObjects;
 
 }

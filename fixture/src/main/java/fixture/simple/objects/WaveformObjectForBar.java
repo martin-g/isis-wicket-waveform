@@ -17,20 +17,15 @@
  *  under the License.
  */
 
-package fixture.simple;
+package fixture.simple.objects;
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
-
-public class SimpleObjectsTearDownFixture extends FixtureScript {
+public class WaveformObjectForBar extends WaveformObjectAbstract {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"SimpleObject\"");
+
+        create("Bar", new int[] {1, 2, 3}, executionContext);
     }
 
-
-    @javax.inject.Inject
-    private IsisJdoSupport isisJdoSupport;
 
 }

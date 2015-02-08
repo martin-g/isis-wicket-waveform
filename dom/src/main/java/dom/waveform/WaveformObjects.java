@@ -28,6 +28,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
 @DomainService(repositoryFor = WaveformObject.class)
@@ -50,13 +51,15 @@ public class WaveformObjects {
     //endregion
 
     //region > create (action)
-    @MemberOrder(sequence = "2")
+    @Programmatic
     public WaveformObject create(
-        final @ParameterLayout(named="Name") String name,
-        final @ParameterLayout(named = "Wave") Waveform waveform
+        String name,
+        int[] wave
     ) {
         final WaveformObject obj = container.newTransientInstance(WaveformObject.class);
         obj.setName(name);
+        Waveform waveform = new Waveform();
+        waveform.setData(wave);
         obj.setWave(waveform);
         container.persistIfNotAlready(obj);
         return obj;

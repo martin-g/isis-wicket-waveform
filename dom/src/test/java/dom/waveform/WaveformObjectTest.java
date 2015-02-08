@@ -14,27 +14,38 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package integration.glue;
+package dom.waveform;
 
-import dom.simple.SimpleObject;
+import org.junit.Before;
+import org.junit.Test;
 
-import org.apache.isis.core.specsupport.scenarios.InMemoryDB;
-import org.apache.isis.core.specsupport.scenarios.ScenarioExecution;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
-public class InMemoryDBForSimpleApp extends InMemoryDB {
-    
-    public InMemoryDBForSimpleApp(ScenarioExecution scenarioExecution) {
-        super(scenarioExecution);
+public class WaveformObjectTest {
+
+    WaveformObject simpleObject;
+
+    @Before
+    public void setUp() throws Exception {
+        simpleObject = new WaveformObject();
     }
-    
-    /**
-     * Hook to initialize if possible.
-     */
-    @Override
-    protected void init(Object obj, String str) {
-        if(obj instanceof SimpleObject) {
-            SimpleObject toDoItem = (SimpleObject) obj;
-            toDoItem.setName(str);
+
+    public static class Name extends WaveformObjectTest {
+
+        @Test
+        public void happyCase() throws Exception {
+            // given
+            String name = "Foobar";
+            assertThat(simpleObject.getName(), is(nullValue()));
+
+            // when
+            simpleObject.setName(name);
+
+            // then
+            assertThat(simpleObject.getName(), is(name));
         }
     }
+
 }

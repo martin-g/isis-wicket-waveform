@@ -19,12 +19,12 @@
 
 package fixture.simple.objects;
 
-public class SimpleObjectForBaz extends SimpleObjectAbstract {
+public class WaveformObjectForFoo extends WaveformObjectAbstract {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-        create("Baz", executionContext);
+        create("Foo", new int[] {7, 8, 9}, executionContext);
     }
 
 
