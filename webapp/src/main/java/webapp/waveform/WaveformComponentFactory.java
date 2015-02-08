@@ -9,28 +9,19 @@ import org.apache.isis.viewer.wicket.model.models.EntityModel;
 import org.apache.isis.viewer.wicket.model.models.ScalarModel;
 import org.apache.isis.viewer.wicket.ui.ComponentFactoryAbstract;
 import org.apache.isis.viewer.wicket.ui.ComponentType;
+import org.apache.isis.viewer.wicket.ui.components.scalars.ComponentFactoryScalarAbstract;
 
 /**
  *
  */
-public class WaveformComponentFactory extends ComponentFactoryAbstract {
+public class WaveformComponentFactory extends ComponentFactoryScalarAbstract {
 
     public WaveformComponentFactory() {
-        super(ComponentType.VALUE, "waveform", WaveformPanel.class);
+        super(WaveformPanel.class, Waveform.class);
     }
 
     @Override
-    protected ApplicationAdvice appliesTo(IModel<?> model) {
-        if (!(model instanceof ScalarModel)) {
-            return ApplicationAdvice.DOES_NOT_APPLY;
-        }
-        ScalarModel scalarModel = (ScalarModel) model;
-        ObjectAdapter objectAdapter = scalarModel.getObject();
-        return Waveform.class == objectAdapter.getSpecification().getCorrespondingClass() ? ApplicationAdvice.APPLIES : ApplicationAdvice.DOES_NOT_APPLY;
-    }
-
-    @Override
-    public Component createComponent(String id, IModel<?> model) {
-        return new WaveformPanel(id, (EntityModel) model);
+    protected Component createComponent(String id, ScalarModel scalarModel) {
+        return new WaveformPanel(id, scalarModel);
     }
 }

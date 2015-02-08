@@ -1,20 +1,20 @@
 package webapp.waveform;
 
-import dom.waveform.Waveform;
-
+import org.apache.isis.core.metamodel.adapter.ObjectAdapter;
+import org.apache.isis.viewer.wicket.model.models.ScalarModel;
+import org.apache.isis.viewer.wicket.ui.panels.PanelAbstract;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
-import org.apache.isis.core.metamodel.adapter.ObjectAdapter;
-import org.apache.isis.viewer.wicket.model.models.EntityModel;
-import org.apache.isis.viewer.wicket.ui.panels.PanelAbstract;
+
+import dom.waveform.Waveform;
 
 /**
  *
  */
-public class WaveformPanel extends PanelAbstract<EntityModel> {
+public class WaveformPanel extends PanelAbstract<ScalarModel> {
 
-    public WaveformPanel(String id, EntityModel model) {
+    public WaveformPanel(String id, ScalarModel model) {
         super(id, model);
     }
 
@@ -22,7 +22,7 @@ public class WaveformPanel extends PanelAbstract<EntityModel> {
     protected void onInitialize() {
         super.onInitialize();
 
-        EntityModel model = getModel();
+        ScalarModel model = getModel();
         ObjectAdapter objectAdapter = model.getObject();
         Waveform waveform = (Waveform) objectAdapter.getObject();
         TextField<Waveform> editor = new TextField<Waveform>("editor", Model.of(waveform)) {

@@ -52,9 +52,12 @@ public class WaveformObjects {
     //region > create (action)
     @MemberOrder(sequence = "2")
     public WaveformObject create(
-            final @ParameterLayout(named="Name") String name) {
+        final @ParameterLayout(named="Name") String name,
+        final @ParameterLayout(named = "Wave") Waveform waveform
+    ) {
         final WaveformObject obj = container.newTransientInstance(WaveformObject.class);
         obj.setName(name);
+        obj.setWave(waveform);
         container.persistIfNotAlready(obj);
         return obj;
     }
