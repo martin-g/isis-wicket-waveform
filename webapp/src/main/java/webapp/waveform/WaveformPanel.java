@@ -26,34 +26,34 @@ import dom.waveform.WaveformObject;
  */
 public class WaveformPanel extends FormComponentPanel<ObjectAdapter> {
 
-    private final HiddenField<String> waveformField;
     private final WaveformConverter converter;
 
     public WaveformPanel(String id, ScalarModel model) {
         super(id, model);
 
-        WebMarkupContainer waveformContainer = new WebMarkupContainer("waveformContainer");
-        add(waveformContainer);
-
-        ChartTemplatePanel chartTemplatePanel = new ChartTemplatePanel("chartTemplate");
-        add(chartTemplatePanel);
-
         this.converter = new WaveformConverter();
+    }
 
-        ObjectAdapter objectAdapter = model.getObject();
-        Waveform waveform = (Waveform) objectAdapter.getObject();
-        String string = converter.convertToString(waveform, Locale.ENGLISH);
-        waveformField = new HiddenField<>("waveform", Model.of(string));
-        add(waveformField);
+    @Override
+    protected void onConfigure() {
+        super.onConfigure();
+
+        WebMarkupContainer waveformContainer = new WebMarkupContainer("waveformContainer");
+        ChartTemplatePanel chartTemplatePanel = new ChartTemplatePanel("chartTemplate");
+        addOrReplace(waveformContainer, chartTemplatePanel);
+
+//        ObjectAdapter objectAdapter = getModelObject();
+//        Waveform waveform = (Waveform) objectAdapter.getObject();
+//        String string = converter.convertToString(waveform, Locale.ENGLISH);
     }
 
     @Override
     public void updateModel() {
-        String input = waveformField.getModelObject();
-        Waveform waveform = converter.convertToObject(input, Locale.ENGLISH);
-        ObjectAdapter objectAdapter = getModelObject();
-        WaveformObject waveformObject = (WaveformObject) objectAdapter.getObject();
-        waveformObject.setWave(waveform);
+//        String input = waveformField.getModelObject();
+//        Waveform waveform = converter.convertToObject(input, Locale.ENGLISH);
+//        ObjectAdapter objectAdapter = getModelObject();
+//        Waveform waveformObject = (Waveform) objectAdapter.getObject();
+//        waveformObject.setWave(waveform);
     }
 
     @Override
@@ -61,7 +61,9 @@ public class WaveformPanel extends FormComponentPanel<ObjectAdapter> {
         super.renderHead(response);
 
         response.render(CssHeaderItem.forReference(new CssResourceReference(WaveformPanel.class, "res/chart-rx.css")));
+        response.render(CssHeaderItem.forReference(new CssResourceReference(WaveformPanel.class, "res/jquery.bootstrap-touchspin.css")));
         response.render(JavaScriptHeaderItem.forReference(new JQueryPluginResourceReference(WaveformPanel.class, "res/ractive.js")));
+        response.render(JavaScriptHeaderItem.forReference(new JQueryPluginResourceReference(WaveformPanel.class, "res/jquery.bootstrap-touchspin.js")));
 
         final PackageTextTemplate shoppingRx = new PackageTextTemplate(WaveformPanel.class, "res/chart-rx.js");
 

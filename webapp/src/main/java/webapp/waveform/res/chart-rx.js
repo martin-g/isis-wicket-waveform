@@ -49,6 +49,19 @@ $(function() {
             },
 
             monthNames: [ 'J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D' ]
+        },
+        onrender: function() {
+            var that = this;
+
+            this.on({
+                updateWaveform: function() {
+                    var index = $("#waveformIndex").val() || 0;
+                    var value = $("#waveformValue").val() || 0;
+                    var waveform = this.get('waveform');
+                    waveform[index] = value;
+                    this.set('waveform', waveform);
+                }
+            });
         }
     });
 
@@ -96,5 +109,17 @@ $(function() {
 
     ractive.set({
         waveform: waveform
+    });
+
+    $("#waveformValue").TouchSpin({
+        max: 0x7fffffff,
+        boostat: 5,
+        verticalbuttons: true
+    });
+
+    $("#waveformIndex").TouchSpin({
+        max: waveform.length,
+        boostat: 5,
+        verticalbuttons: true
     });
 });
