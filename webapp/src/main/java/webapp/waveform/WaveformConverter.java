@@ -32,6 +32,9 @@ public class WaveformConverter implements IConverter<Waveform> {
         int[] data = value.getData();
         StringBuilder asString = new StringBuilder(data.length);
         for (int integer : data) {
+            if (asString.length() > 0) {
+                asString.append(',');
+            }
             asString.append(integer);
         }
         return asString.toString();

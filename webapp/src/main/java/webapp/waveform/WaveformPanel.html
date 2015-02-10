@@ -3,7 +3,15 @@
     <body>
         <wicket:panel>
 
+            <div wicket:id="waveformContainer" id="waveformContainer"></div>
+
             <input type="hidden" wicket:id="waveform" />
+
+            <script id="waveform" type="text/ractive">
+
+                <wicket:container wicket:id="chartTemplate"/>
+
+            </script>
 
         </wicket:panel>
     </body>

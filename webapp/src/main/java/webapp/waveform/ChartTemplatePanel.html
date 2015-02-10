@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+    <body>
+        <wicket:panel>
+
+            <div class='temperatures'>
+
+                <!-- header and options -->
+                <div class='chart-header'>
+                    <h3>Waveform</h3>
+                </div>
+
+                <!-- the chart -->
+                <div class='chart'>
+                    <div id='svg_wrapper'> <!-- needed to determine size of SVG element in Firefox -->
+                        <svg id='svg'>
+
+                            <!-- gradient - higher temperatures are redder, lower temperatures are bluer -->
+                            <defs>
+                                <linearGradient id='gradient' x2='0' y2='100%' gradientUnits='userSpaceOnUse'>
+                                    <stop offset='0%' stop-color='rgb(255,0,0)' />
+                                    <stop offset='100%' stop-color='rgb(0,0,255)' />
+                                </linearGradient>
+                            </defs>
+
+                            <polyline class="line" points='{{ band(waveform) }}'/>
+
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </wicket:panel>
+    </body>
+</html>
